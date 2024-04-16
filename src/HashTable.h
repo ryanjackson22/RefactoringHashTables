@@ -39,6 +39,7 @@
 
 #define DEFAULT_CAPACITY 10
 #define MAX_LOAD_FACTOR 0.7
+#define GROWTH_FACTOR 2
 
 using namespace std;
 
@@ -66,7 +67,7 @@ namespace csi281 {
             total_elements++;
 
             if (atMAX_LOAD_FACTOR())
-                resizeHashTable(array_slots * growthFactor);
+                resizeHashTable(array_slots * GROWTH_FACTOR);
         }
 
         void insertNewKey(const K key, const V value) {
@@ -151,7 +152,7 @@ namespace csi281 {
         
     private:
         int array_slots = 0;
-        int growthFactor = 2;
+//        int growthFactor = 2;
         int total_elements = 0;
         hash<K> key_hash;
         list<pair<K, V> > *backingStore = nullptr;
