@@ -160,16 +160,16 @@ namespace csi281 {
         // new backing store of size capacity, or create
         // the backingStore for the first time
         void resizeHashTable(int capacity) {
-            list<pair<K, V> > *backingStoreReplacement = new list<pair<K, V> >[capacity];
+            list<pair<K, V> > *newBackingStore = new list<pair<K, V> >[capacity];
             for (int i = 0; i < capacity; i++) {
-                backingStoreReplacement[i] = list<pair<K, V> >();
+                newBackingStore[i] = list<pair<K, V> >();
             }
 
             // get items from old backing store and move them over
             if (total_elements > 0) { // only if there are items to move
                 for (int i = 0; i < array_slots; i++) {
                     for (pair<K, V> element : backingStore[i]) {
-                        backingStoreReplacement[findArraySlot(element.first, capacity)].push_back(element);
+                        newBackingStore[findArraySlot(element.first, capacity)].push_back(element);
                     }
                 }
             }
@@ -178,7 +178,7 @@ namespace csi281 {
                 delete[] backingStore;
             }
 
-            backingStore = backingStoreReplacement;
+            backingStore = newBackingStore;
             array_slots = capacity;
         }
         
