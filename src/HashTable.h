@@ -161,8 +161,8 @@ namespace csi281 {
         // the backingStore for the first time
         void resizeHashTable(int capacity) {
             list<pair<K, V> > *newBackingStore = new list<pair<K, V> >[capacity];
-            for (int i = 0; i < capacity; i++) {
-                newBackingStore[i] = list<pair<K, V> >();
+            for (int currentIndex = 0; currentIndex < capacity; currentIndex++) {
+                newBackingStore[currentIndex] = list<pair<K, V> >();
             }
 
             // get items from old backing store and move them over
