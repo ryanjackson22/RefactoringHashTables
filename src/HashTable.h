@@ -69,7 +69,7 @@ namespace csi281 {
             if(isKeyFound(key, value))
                 return;
             // general case:
-            backingStore[(hashKey(key) % array_slots)].push_back(make_pair(key, value));
+            backingStore[findArraySlot(key)].push_back(make_pair(key, value));
             total_elements++;
             // if the load factor exceeds MAX_LOAD_FACTOR (0.7)
                 if (getLoadFactor() >= MAX_LOAD_FACTOR) {
@@ -77,8 +77,10 @@ namespace csi281 {
                 }
         }
 
+        size_t findArraySlot(const K key) { return (hashKey(key) % array_slots); }
+
         bool isKeyFound(const K key, const V value) {
-            for (auto &p : backingStore[hashKey(key) % array_slots]) { // traversing the list
+            for (auto &p : backingStore[findArraySlot(key)]) { // traversing the list
                 if (p.first == key) { // if the key is found
                     p.second = value; // updating the value
                     return true;
@@ -97,8 +99,8 @@ namespace csi281 {
         // location in the backing store, so you're modifying
         // the original and not a copy
         optional<V> get(const K &key) {
-            size_t index = hashKey(key) % array_slots;
-            for (auto &p : backingStore[index]) {
+//            size_t index = hashKey(key) % array_slots;
+            for (auto &p : backingStore[findArraySlot(key)]) {
                 if (p.first == key) { // if the key is found:
                     // if key is found:
                     return p.second; // return the value
@@ -115,10 +117,10 @@ namespace csi281 {
         // location in the backing store, so you're modifying
         // the original and not a copy
         void remove(const K &key) {
-            size_t index = hashKey(key) % array_slots;
-            for (auto &p : backingStore[index]) { // traversing the list
+//            size_t index = hashKey(key) % array_slots;
+            for (auto &p : backingStore[findArraySlot(key)]) { // traversing the list
                 if (p.first == key) { // if the key is found:
-                    backingStore[index].remove(p); // remove the pair
+                    backingStore[findArraySlot(key)].remove(p); // remove the pair
                     total_elements--; // decrease total_elements
                     return;
                 }
