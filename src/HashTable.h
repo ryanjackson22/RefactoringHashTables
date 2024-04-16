@@ -74,10 +74,12 @@ namespace csi281 {
             backingStore[findArraySlot(key)].push_back(make_pair(key, value));
             total_elements++;
             // if the load factor exceeds MAX_LOAD_FACTOR (0.7)
-                if (getLoadFactor() >= MAX_LOAD_FACTOR) {
+                if (atMAX_LOAD_FACTOR()) {
                     resize(array_slots * growthFactor);
                 }
         }
+
+        bool atMAX_LOAD_FACTOR() { return getLoadFactor() >= MAX_LOAD_FACTOR; }
 
         size_t findArraySlot(const K key) { return (hashKey(key) % array_slots); }
 
