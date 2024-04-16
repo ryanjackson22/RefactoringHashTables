@@ -47,7 +47,7 @@ namespace csi281 {
     class HashTable {
     public:
         // Initialize the array with a starting capacity
-        HashTable(int cap = DEFAULT_CAPACITY) {
+        explicit HashTable(int cap = DEFAULT_CAPACITY) {
             if (cap < 1) { cap = 1; } // cannot have < 1 capacity
             resize(cap);
         }
