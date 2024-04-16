@@ -50,7 +50,7 @@ namespace csi281 {
         HashTable(int capacity = DEFAULT_CAPACITY) {
             if (isInvalidCapacity(capacity))
                 capacity = DEFAULT_CAPACITY;
-            resize(capacity);
+            resizeHashTable(capacity);
         }
 
         ~HashTable() {
@@ -61,7 +61,7 @@ namespace csi281 {
         // If *key* is already present, change its
         // associated value to *value*
         // If the load factor exceeds the MAX_LOAD_FACTOR
-        // then resize the table
+        // then resizeHashTable the table
         // TIP: Be careful to get a reference to the list at each
         // location in the backing store, so you're modifying
         // the original and not a copy
@@ -70,11 +70,9 @@ namespace csi281 {
                 updateValue(key, value);
                 return;
             }
-            // general case:
             insertNewKey(key, value);
-
             if (atMAX_LOAD_FACTOR())
-                resize(array_slots * growthFactor);
+                resizeHashTable(array_slots * growthFactor);
         }
 
         void insertNewKey(const K key, const V value) {
@@ -173,7 +171,7 @@ namespace csi281 {
         // Shift all of the items in backingStore into a
         // new backing store of size cap, or create
         // the backingStore for the first time
-        void resize(int cap) {
+        void resizeHashTable(int cap) {
             list<pair<K, V> > *backingStoreReplacement = new list<pair<K, V> >[cap];
             for (int i = 0; i < cap; i++) {
                 backingStoreReplacement[i] = list<pair<K, V> >();

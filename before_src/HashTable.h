@@ -157,7 +157,7 @@ namespace csi281 {
         // Shift all of the items in backingStore into a
         // new backing store of size cap, or create
         // the backingStore for the first time
-        void resize(int cap) {
+        void resizeHashTable(int cap) {
             list<pair<K, V>> *backingStoreReplacement = new list<pair<K, V>>[cap];
             for (int i = 0; i < cap; i++) {
                 backingStoreReplacement[i] = list<pair<K, V>>();
