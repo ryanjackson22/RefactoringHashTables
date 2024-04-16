@@ -38,10 +38,10 @@ TEST_CASE( "Hash Table w/ string int", "[stringint]" ) {
     SECTION( "invalid initial array_slots" ) {
         // basic checks
         HashTable<string, int> ht1 = HashTable<string, int>(0);
-        CHECK(ht1.getCapacity() == DEFAULT_CAPACITY);
+        CHECK(ht1.getArraySlots() == DEFAULT_CAPACITY);
 
         HashTable<string, int> ht2 = HashTable<string, int>(-10);
-        CHECK(ht1.getCapacity() == DEFAULT_CAPACITY);
+        CHECK(ht1.getArraySlots() == DEFAULT_CAPACITY);
     }
 
     SECTION( "basic string int Test" ) {
@@ -72,7 +72,7 @@ TEST_CASE( "Hash Table w/ string int", "[stringint]" ) {
         ht2.put("panda", 134);
         cout << "Before Resize" << endl;
         ht2.debugPrint();
-        CHECK( ht2.getCapacity() == 5 );
+        CHECK(ht2.getArraySlots() == 5 );
         auto optValue = ht2.get("panda");
         CHECK( optValue.has_value() );
         CHECK( optValue.value() == 134 );
@@ -88,7 +88,7 @@ TEST_CASE( "Hash Table w/ string int", "[stringint]" ) {
         cout << "After Resize" << endl;
         ht2.debugPrint();
         // expect a resizeHashTable because load factor over 0.7
-        CHECK( ht2.getCapacity() == 10 );
+        CHECK(ht2.getArraySlots() == 10 );
         CHECK(ht2.getTotalElements() == 4 );
         // check all values still work
         optValue = ht2.get("cat");
@@ -117,7 +117,7 @@ TEST_CASE( "Hash Table w/ string string", "[stringstring]" ) {
         CHECK( optValue.has_value() );
         CHECK( optValue.value() == "aaaaaaaaaaa" );
         CHECK(ht1.getTotalElements() == 50 );
-        CHECK( ht1.getCapacity() == 80 );
+        CHECK(ht1.getArraySlots() == 80 );
         // change value
         ht1.put("aaa", "dog");
         optValue = ht1.get("aaa");
@@ -133,7 +133,7 @@ TEST_CASE( "Hash Table w/ string string", "[stringstring]" ) {
         optValue = ht1.get("aaaa");
         CHECK(ht1.getTotalElements() == 48 );
         CHECK( !optValue.has_value() );
-        CHECK( ht1.getCapacity() == 80 );
+        CHECK(ht1.getArraySlots() == 80 );
     }
 }
 
@@ -147,7 +147,7 @@ TEST_CASE( "Hash Table w/ int float", "[intfloat]" ) {
         auto optValue = ht1.get(27);
         CHECK( optValue.has_value() );
         CHECK(ht1.getTotalElements() == 50 );
-        CHECK( ht1.getCapacity() == 80 );
+        CHECK(ht1.getArraySlots() == 80 );
         // change value
         ht1.put(45, 2.5);
         optValue = ht1.get(45);
@@ -163,7 +163,7 @@ TEST_CASE( "Hash Table w/ int float", "[intfloat]" ) {
         optValue = ht1.get(2);
         CHECK(ht1.getTotalElements() == 48 );
         CHECK( !optValue.has_value() );
-        CHECK( ht1.getCapacity() == 80 );
+        CHECK(ht1.getArraySlots() == 80 );
     }
 }
 

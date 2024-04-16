@@ -56,31 +56,22 @@ namespace csi281 {
         ~HashTable() {
             delete[] backingStore;
         }
-        
-        // Put the key value pair in the hash table
-        // If *key* is already present, change its
-        // associated value to *value*
-        // If the load factor exceeds the MAX_LOAD_FACTOR
-        // then resizeHashTable the table
-        // TIP: Be careful to get a reference to the list at each
-        // location in the backing store, so you're modifying
-        // the original and not a copy
+
         void put(const K key, const V value) {
             if(keyExists(key)) {
                 updateValue(key, value);
                 return;
             }
             insertNewKey(key, value);
+            total_elements++;
+
             if (atMAX_LOAD_FACTOR())
                 resizeHashTable(array_slots * growthFactor);
         }
 
         void insertNewKey(const K key, const V value) {
             backingStore[findArraySlot(key)].push_back(make_pair(key, value));
-            total_elements++;
         }
-
-        size_t findArraySlot(const K key) { return (hashKey(key) % array_slots); }
 
         bool keyExists(const K key) {
             for (auto &p : backingStore[findArraySlot(key)]) { // traversing the list
@@ -136,20 +127,19 @@ namespace csi281 {
                 }
             }
         }
-        
-        // Calculate and return the load factor
+
         float getLoadFactor() { return ((float) total_elements) / ((float) array_slots); }
         
-        // Get the total_elements
         int getTotalElements() { return total_elements; }
         
-        // Get the array_slots
-        int getCapacity() { return array_slots; }
+        int getArraySlots() { return array_slots; }
 
         bool atMAX_LOAD_FACTOR() { return getLoadFactor() >= MAX_LOAD_FACTOR; }
 
         bool isInvalidCapacity(int capacity) const { return capacity < 1; }
-        
+
+        size_t findArraySlot(const K key) { return (hashKey(key) % array_slots); }
+
         // Print out the contents of the hash table
         void debugPrint() {
             for (int i = 0; i < array_slots; i++) {

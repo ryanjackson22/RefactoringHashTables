@@ -132,7 +132,7 @@ namespace csi281 {
         }
         
         // Get the capacity
-        int getCapacity() {
+        int getArraySlots() {
             return capacity;
         }
         
