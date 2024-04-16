@@ -47,16 +47,12 @@ namespace csi281 {
     <typename K, typename V>
     class HashTable {
     public:
-        // Initialize the array with a starting array_slots
         HashTable(int capacity = DEFAULT_CAPACITY) {
             if (isInvalidCapacity(capacity))
                 capacity = DEFAULT_CAPACITY;
             resize(capacity);
         }
 
-        bool isInvalidCapacity(int capacity) const { return capacity < 1; }
-
-        // Erase the array
         ~HashTable() {
             delete[] backingStore;
         }
@@ -70,23 +66,29 @@ namespace csi281 {
         // location in the backing store, so you're modifying
         // the original and not a copy
         void put(const K key, const V value) {
-            // if the key is already present, update the value assosiated with that key
+            // if the key is already present, update the value associated with that key
             size_t index = hashKey(key) % array_slots;
-            for (auto &p : backingStore[index]) { // traversing the list
-                if (p.first == key) { // if the key is found
-                    p.second = value; // updating the value
-                    return;
-                }
-            }  
+            if(isKeyFound(key, value, index))
+                return;
             // general case:
-                backingStore[index].push_back(make_pair(key, value));
-                total_elements++;
+            backingStore[index].push_back(make_pair(key, value));
+            total_elements++;
             // if the load factor exceeds MAX_LOAD_FACTOR (0.7)
                 if (getLoadFactor() >= MAX_LOAD_FACTOR) {
                     resize(array_slots * growthFactor);
                 }
         }
-        
+
+        bool isKeyFound(const K key, const V value, size_t index) {
+            for (auto &p : backingStore[index]) { // traversing the list
+                if (p.first == key) { // if the key is found
+                    p.second = value; // updating the value
+                    return true;
+                }
+            }
+            return false;
+        }
+
         // Get the item associated with a particular key
         // return an empty optional (nullopt) if the item is not found
         // and returns an optional with the value associated with key
@@ -126,19 +128,15 @@ namespace csi281 {
         }
         
         // Calculate and return the load factor
-        float getLoadFactor() {
-            return ((float) total_elements) / ((float) array_slots);
-        }
+        float getLoadFactor() { return ((float) total_elements) / ((float) array_slots); }
         
         // Get the total_elements
-        int getTotalElements() {
-            return total_elements;
-        }
+        int getTotalElements() { return total_elements; }
         
         // Get the array_slots
-        int getCapacity() {
-            return array_slots;
-        }
+        int getCapacity() { return array_slots; }
+
+        bool isInvalidCapacity(int capacity) const { return capacity < 1; }
         
         // Print out the contents of the hash table
         void debugPrint() {
