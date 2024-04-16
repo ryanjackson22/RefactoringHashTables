@@ -71,11 +71,11 @@ namespace csi281 {
         }
 
         void insertNewKey(const K key, const V value) {
-            backingStore[findArraySlot(key)].push_back(make_pair(key, value));
+            backingStore[findArraySlot(key, array_slots)].push_back(make_pair(key, value));
         }
 
         bool keyExists(const K key) {
-            for (pair<K, V>& element : backingStore[findArraySlot(key)]) {
+            for (pair<K, V>& element : backingStore[findArraySlot(key, array_slots)]) {
                 if (element.first == key) {
                     return true;
                 }
@@ -84,7 +84,7 @@ namespace csi281 {
         }
 
         void updateValue(const K key, const V value) {
-            for (pair<K, V>& element : backingStore[findArraySlot(key)]) { // traversing the list
+            for (pair<K, V>& element : backingStore[findArraySlot(key, array_slots)]) { // traversing the list
                 if (element.first == key) { // if the key is found
                     element.second = value; // updating the value
                 }
@@ -101,7 +101,7 @@ namespace csi281 {
         // location in the backing store, so you're modifying
         // the original and not a copy
         optional<V> get(const K &key) {
-            for (pair<K, V>& element : backingStore[findArraySlot(key)]) {
+            for (pair<K, V>& element : backingStore[findArraySlot(key, array_slots)]) {
                 if (element.first == key) {
                     return element.second;
                 }
@@ -118,9 +118,9 @@ namespace csi281 {
         // the original and not a copy
         void remove(const K &key) {
 //            size_t index = hashKey(key) % array_slots;
-            for (pair<K, V>& element : backingStore[findArraySlot(key)]) { // traversing the list
+            for (pair<K, V>& element : backingStore[findArraySlot(key, array_slots)]) { // traversing the list
                 if (element.first == key) { // if the key is found:
-                    backingStore[findArraySlot(key)].remove(element); // remove the pair
+                    backingStore[findArraySlot(key, array_slots)].remove(element); // remove the pair
                     total_elements--; // decrease total_elements
                     return;
                 }
@@ -137,7 +137,7 @@ namespace csi281 {
 
         bool isInvalidCapacity(int capacity) const { return capacity < 1; }
 
-        size_t findArraySlot(const K key) { return (hashKey(key) % array_slots); }
+        size_t findArraySlot(const K key, const size_t capacity) { return (hashKey(key) % capacity); }
 
         // Print out the contents of the hash table
         void debugPrint() {
@@ -169,10 +169,7 @@ namespace csi281 {
             if (total_elements > 0) { // only if there are items to move
                 for (int i = 0; i < array_slots; i++) {
                     for (pair<K, V> element : backingStore[i]) {
-                        // find location in new array
-                        size_t index = hashKey(element.first) % capacity;
-                        // put it in
-                        backingStoreReplacement[index].push_back(element);
+                        backingStoreReplacement[findArraySlot(element.first, capacity)].push_back(element);
                     }
                 }
             }
