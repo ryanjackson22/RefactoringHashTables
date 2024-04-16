@@ -74,8 +74,8 @@ namespace csi281 {
         }
 
         bool keyExists(const K key) {
-            for (auto &p : backingStore[findArraySlot(key)]) { // traversing the list
-                if (p.first == key) { // if the key is found
+            for (pair<K, V> &element : backingStore[findArraySlot(key)]) {
+                if (element.first == key) {
                     return true;
                 }
             }
