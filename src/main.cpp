@@ -29,7 +29,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 
 #define CATCH_CONFIG_RUNNER
-#include "catch.h"
+#include "/Users/ryanjackson/Desktop/Champlain/2024_Spring/CSI420/Final Project/RefactoringHashTables/lib/catch.h"
 
 using namespace std;
 
