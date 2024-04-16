@@ -49,6 +49,8 @@ namespace csi281 {
     public:
         // Initialize the array with a starting capacity
         HashTable(int capacity = DEFAULT_CAPACITY) {
+            if (isInvalidCapacity(capacity))
+                capacity = DEFAULT_CAPACITY;
             resize(capacity);
         }
 

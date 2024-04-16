@@ -4,7 +4,8 @@
 //  Tests to prove your code works.
 //  You should NOT modify this file.
 //
-//  Copyright 2019 David Kopec
+//  Copyright               2019 David Kopec
+//  Additional Tests Added  2024 Ryan Jackson
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation files
@@ -34,6 +35,15 @@ using namespace std;
 using namespace csi281;
 
 TEST_CASE( "Hash Table w/ string int", "[stringint]" ) {
+    SECTION( "invalid initial capacity" ) {
+        // basic checks
+        HashTable<string, int> ht1 = HashTable<string, int>(0);
+        CHECK(ht1.getCapacity() == DEFAULT_CAPACITY);
+
+        HashTable<string, int> ht2 = HashTable<string, int>(-10);
+        CHECK(ht1.getCapacity() == DEFAULT_CAPACITY);
+    }
+
     SECTION( "basic string int Test" ) {
         // basic checks
         HashTable<string, int> ht1 = HashTable<string, int>();
