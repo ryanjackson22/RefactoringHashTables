@@ -101,10 +101,10 @@ namespace csi281 {
         // the original and not a copy
         optional<V> get(const K &key) {
 //            size_t index = hashKey(key) % array_slots;
-            for (auto &p : backingStore[findArraySlot(key)]) {
-                if (p.first == key) { // if the key is found:
+            for (pair<K, V>& element : backingStore[findArraySlot(key)]) {
+                if (element.first == key) { // if the key is found:
                     // if key is found:
-                    return p.second; // return the value
+                    return element.second; // return the value
                 }
             }
             // return an empty optional if the item is not found
