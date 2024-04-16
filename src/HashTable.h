@@ -100,15 +100,13 @@ namespace csi281 {
         // location in the backing store, so you're modifying
         // the original and not a copy
         optional<V> get(const K &key) {
-//            size_t index = hashKey(key) % array_slots;
             for (pair<K, V>& element : backingStore[findArraySlot(key)]) {
-                if (element.first == key) { // if the key is found:
-                    // if key is found:
-                    return element.second; // return the value
+                if (element.first == key) {
+                    return element.second;
                 }
             }
             // return an empty optional if the item is not found
-                return nullopt;
+            return nullopt;
         }
         
         // Remove a key and any associated value from the hash table
@@ -119,9 +117,9 @@ namespace csi281 {
         // the original and not a copy
         void remove(const K &key) {
 //            size_t index = hashKey(key) % array_slots;
-            for (auto &p : backingStore[findArraySlot(key)]) { // traversing the list
-                if (p.first == key) { // if the key is found:
-                    backingStore[findArraySlot(key)].remove(p); // remove the pair
+            for (pair<K, V>& element : backingStore[findArraySlot(key)]) { // traversing the list
+                if (element.first == key) { // if the key is found:
+                    backingStore[findArraySlot(key)].remove(element); // remove the pair
                     total_elements--; // decrease total_elements
                     return;
                 }
