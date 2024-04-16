@@ -66,12 +66,10 @@ namespace csi281 {
         // location in the backing store, so you're modifying
         // the original and not a copy
         void put(const K key, const V value) {
-            // if the key is already present, update the value associated with that key
-            size_t index = hashKey(key) % array_slots;
-            if(isKeyFound(key, value, index))
+            if(isKeyFound(key, value))
                 return;
             // general case:
-            backingStore[index].push_back(make_pair(key, value));
+            backingStore[(hashKey(key) % array_slots)].push_back(make_pair(key, value));
             total_elements++;
             // if the load factor exceeds MAX_LOAD_FACTOR (0.7)
                 if (getLoadFactor() >= MAX_LOAD_FACTOR) {
@@ -79,8 +77,8 @@ namespace csi281 {
                 }
         }
 
-        bool isKeyFound(const K key, const V value, size_t index) {
-            for (auto &p : backingStore[index]) { // traversing the list
+        bool isKeyFound(const K key, const V value) {
+            for (auto &p : backingStore[hashKey(key) % array_slots]) { // traversing the list
                 if (p.first == key) { // if the key is found
                     p.second = value; // updating the value
                     return true;
