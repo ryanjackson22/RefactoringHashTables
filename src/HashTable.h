@@ -152,28 +152,27 @@ namespace csi281 {
         
     private:
         int array_slots = 0;
-//        int growthFactor = 2;
         int total_elements = 0;
         hash<K> key_hash;
         list<pair<K, V> > *backingStore = nullptr;
         
         // Shift all of the items in backingStore into a
-        // new backing store of size cap, or create
+        // new backing store of size capacity, or create
         // the backingStore for the first time
-        void resizeHashTable(int cap) {
-            list<pair<K, V> > *backingStoreReplacement = new list<pair<K, V> >[cap];
-            for (int i = 0; i < cap; i++) {
+        void resizeHashTable(int capacity) {
+            list<pair<K, V> > *backingStoreReplacement = new list<pair<K, V> >[capacity];
+            for (int i = 0; i < capacity; i++) {
                 backingStoreReplacement[i] = list<pair<K, V> >();
             }
 
             // get items from old backing store and move them over
             if (total_elements > 0) { // only if there are items to move
                 for (int i = 0; i < array_slots; i++) {
-                    for (auto p : backingStore[i]) {
+                    for (pair<K, V> element : backingStore[i]) {
                         // find location in new array
-                        size_t index = hashKey(p.first) % cap;
+                        size_t index = hashKey(element.first) % capacity;
                         // put it in
-                        backingStoreReplacement[index].push_back(p);
+                        backingStoreReplacement[index].push_back(element);
                     }
                 }
             }
@@ -183,7 +182,7 @@ namespace csi281 {
             }
 
             backingStore = backingStoreReplacement;
-            array_slots = cap;
+            array_slots = capacity;
         }
         
         // hash anything into an integer appropriate for
