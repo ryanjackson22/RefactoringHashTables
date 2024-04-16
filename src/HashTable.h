@@ -142,8 +142,8 @@ namespace csi281 {
         void debugPrint() {
             for (int i = 0; i < array_slots; i++) {
                 cout << i << ":";
-                for (auto p : backingStore[i]) {
-                    cout << " -> (" << p.first << ", " << p.second << ")";
+                for (pair<K, V>& element : backingStore[i]) {
+                    cout << " -> (" << element.first << ", " << element.second << ")";
                 }
                 cout << endl;
             }
