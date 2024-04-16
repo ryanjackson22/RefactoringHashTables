@@ -83,9 +83,9 @@ namespace csi281 {
         }
 
         void updateValue(const K key, const V value) {
-            for (auto &p : backingStore[findArraySlot(key)]) { // traversing the list
-                if (p.first == key) { // if the key is found
-                    p.second = value; // updating the value
+            for (pair<K, V>& element : backingStore[findArraySlot(key)]) { // traversing the list
+                if (element.first == key) { // if the key is found
+                    element.second = value; // updating the value
                 }
             }
         }
