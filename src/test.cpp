@@ -26,7 +26,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 
 #include "HashTable.h"
-#include "catch.h"
+#include "/Users/ryanjackson/Desktop/Champlain/2024_Spring/CSI420/Final Project/RefactoringHashTables/lib/catch.h"
 #include <string>
 #include <iostream>
 
