@@ -4916,9 +4916,9 @@ namespace Catch {
         for( int c = 0; c < noClasses; c++ ) {
             Class cls = classes[c];
             {
-                u_int count;
-                Method* methods = class_copyMethodList( cls, &count );
-                for( u_int m = 0; m < count ; m++ ) {
+                u_int total_elements;
+                Method* methods = class_copyMethodList( cls, &total_elements );
+                for( u_int m = 0; m < total_elements ; m++ ) {
                     SEL selector = method_getName(methods[m]);
                     std::string methodName = sel_getName(selector);
                     if( startsWith( methodName, "Catch_TestCase_" ) ) {
@@ -5740,7 +5740,7 @@ namespace Catch {
             stream( _config.stream() )
         {
             m_reporterPrefs.shouldRedirectStdOut = false;
-            if( !DerivedT::getSupportedVerbosities().count( m_config->verbosity() ) )
+            if( !DerivedT::getSupportedVerbosities().total_elements(m_config->verbosity() ) )
                 CATCH_ERROR( "Verbosity level not supported by this reporter" );
         }
 
@@ -5857,7 +5857,7 @@ namespace Catch {
             stream( _config.stream() )
         {
             m_reporterPrefs.shouldRedirectStdOut = false;
-            if( !DerivedT::getSupportedVerbosities().count( m_config->verbosity() ) )
+            if( !DerivedT::getSupportedVerbosities().total_elements(m_config->verbosity() ) )
                 CATCH_ERROR( "Verbosity level not supported by this reporter" );
         }
         ~CumulativeReporterBase() override = default;
@@ -6989,9 +6989,9 @@ namespace Catch {
 
             template <typename Iterator>
             double mean(Iterator first, Iterator last) {
-                auto count = last - first;
+                auto total_elements = last - first;
                 double sum = std::accumulate(first, last, 0.);
-                return sum / count;
+                return sum / total_elements;
             }
 
             template <typename URng, typename Iterator, typename Estimator>
@@ -7107,7 +7107,7 @@ namespace Catch {
                 deltas.reserve(k);
                 std::transform(std::next(times.begin()), times.end(), times.begin(),
                     std::back_inserter(deltas),
-                    [](TimePoint<Clock> a, TimePoint<Clock> b) { return static_cast<double>((a - b).count()); });
+                    [](TimePoint<Clock> a, TimePoint<Clock> b) { return static_cast<double>((a - b).total_elements()); });
 
                 return deltas;
             }
@@ -7156,7 +7156,7 @@ namespace Catch {
                 int nsamples = static_cast<int>(std::ceil(time_limit / r.elapsed));
                 times.reserve(nsamples);
                 std::generate_n(std::back_inserter(times), nsamples, [time_clock, &r] {
-                    return static_cast<double>((time_clock(r.iterations) / r.iterations).count());
+                    return static_cast<double>((time_clock(r.iterations) / r.iterations).total_elements());
                 });
                 return {
                     FloatDuration<Clock>(mean(times.begin(), times.end())),
@@ -7238,7 +7238,7 @@ namespace Catch {
                 if (!cfg.benchmarkNoAnalysis()) {
                     std::vector<double> samples;
                     samples.reserve(last - first);
-                    std::transform(first, last, std::back_inserter(samples), [](Duration d) { return d.count(); });
+                    std::transform(first, last, std::back_inserter(samples), [](Duration d) { return d.total_elements(); });
 
                     auto analysis = Catch::Benchmark::Detail::analyse_samples(cfg.benchmarkConfidenceInterval(), cfg.benchmarkResamples(), samples.begin(), samples.end());
                     auto outliers = Catch::Benchmark::Detail::classify_outliers(samples.begin(), samples.end());
@@ -7326,12 +7326,12 @@ namespace Catch {
 
                     BenchmarkInfo info {
                         name,
-                        plan.estimated_duration.count(),
+                        plan.estimated_duration.total_elements(),
                         plan.iterations_per_sample,
                         cfg->benchmarkSamples(),
                         cfg->benchmarkResamples(),
-                        env.clock_resolution.mean.count(),
-                        env.clock_cost.mean.count()
+                        env.clock_resolution.mean.total_elements(),
+                        env.clock_cost.mean.total_elements()
                     };
 
                     getResultCapture().benchmarkStarting(info);
@@ -7749,8 +7749,8 @@ namespace Catch {
         namespace Detail {
 
             double weighted_average_quantile(int k, int q, std::vector<double>::iterator first, std::vector<double>::iterator last) {
-                auto count = last - first;
-                double idx = (count - 1) * k / static_cast<double>(q);
+                auto total_elements = last - first;
+                double idx = (total_elements - 1) * k / static_cast<double>(q);
                 int j = static_cast<int>(idx);
                 double g = idx - j;
                 std::nth_element(first, first + j, last);
@@ -16552,17 +16552,17 @@ void ConsoleReporter::benchmarkStarting(BenchmarkInfo const& info) {
 void ConsoleReporter::benchmarkEnded(BenchmarkStats<> const& stats) {
     if (m_config->benchmarkNoAnalysis())
     {
-        (*m_tablePrinter) << Duration(stats.mean.point.count()) << ColumnBreak();
+        (*m_tablePrinter) << Duration(stats.mean.point.total_elements()) << ColumnBreak();
     }
     else
     {
         (*m_tablePrinter) << ColumnBreak()
-            << Duration(stats.mean.point.count()) << ColumnBreak()
-            << Duration(stats.mean.lower_bound.count()) << ColumnBreak()
-            << Duration(stats.mean.upper_bound.count()) << ColumnBreak() << ColumnBreak()
-            << Duration(stats.standardDeviation.point.count()) << ColumnBreak()
-            << Duration(stats.standardDeviation.lower_bound.count()) << ColumnBreak()
-            << Duration(stats.standardDeviation.upper_bound.count()) << ColumnBreak() << ColumnBreak() << ColumnBreak() << ColumnBreak() << ColumnBreak();
+            << Duration(stats.mean.point.total_elements()) << ColumnBreak()
+            << Duration(stats.mean.lower_bound.total_elements()) << ColumnBreak()
+            << Duration(stats.mean.upper_bound.total_elements()) << ColumnBreak() << ColumnBreak()
+            << Duration(stats.standardDeviation.point.total_elements()) << ColumnBreak()
+            << Duration(stats.standardDeviation.lower_bound.total_elements()) << ColumnBreak()
+            << Duration(stats.standardDeviation.upper_bound.total_elements()) << ColumnBreak() << ColumnBreak() << ColumnBreak() << ColumnBreak() << ColumnBreak();
     }
 }
 
@@ -17471,15 +17471,15 @@ namespace Catch {
 
     void XmlReporter::benchmarkEnded(BenchmarkStats<> const& benchmarkStats) {
         m_xml.startElement("mean")
-            .writeAttribute("value", benchmarkStats.mean.point.count())
-            .writeAttribute("lowerBound", benchmarkStats.mean.lower_bound.count())
-            .writeAttribute("upperBound", benchmarkStats.mean.upper_bound.count())
+            .writeAttribute("value", benchmarkStats.mean.point.total_elements())
+            .writeAttribute("lowerBound", benchmarkStats.mean.lower_bound.total_elements())
+            .writeAttribute("upperBound", benchmarkStats.mean.upper_bound.total_elements())
             .writeAttribute("ci", benchmarkStats.mean.confidence_interval);
         m_xml.endElement();
         m_xml.startElement("standardDeviation")
-            .writeAttribute("value", benchmarkStats.standardDeviation.point.count())
-            .writeAttribute("lowerBound", benchmarkStats.standardDeviation.lower_bound.count())
-            .writeAttribute("upperBound", benchmarkStats.standardDeviation.upper_bound.count())
+            .writeAttribute("value", benchmarkStats.standardDeviation.point.total_elements())
+            .writeAttribute("lowerBound", benchmarkStats.standardDeviation.lower_bound.total_elements())
+            .writeAttribute("upperBound", benchmarkStats.standardDeviation.upper_bound.total_elements())
             .writeAttribute("ci", benchmarkStats.standardDeviation.confidence_interval);
         m_xml.endElement();
         m_xml.startElement("outliers")

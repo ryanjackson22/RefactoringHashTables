@@ -127,7 +127,7 @@ namespace csi281 {
         }
         
         // Get the count
-        int getCount() {
+        int getTotalElements() {
             return count;
         }
         

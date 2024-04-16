@@ -47,7 +47,7 @@ namespace csi281 {
     <typename K, typename V>
     class HashTable {
     public:
-        // Initialize the array with a starting capacity
+        // Initialize the array with a starting array_slots
         HashTable(int capacity = DEFAULT_CAPACITY) {
             if (isInvalidCapacity(capacity))
                 capacity = DEFAULT_CAPACITY;
@@ -71,7 +71,7 @@ namespace csi281 {
         // the original and not a copy
         void put(const K key, const V value) {
             // if the key is already present, update the value assosiated with that key
-            size_t index = hashKey(key) % capacity;
+            size_t index = hashKey(key) % array_slots;
             for (auto &p : backingStore[index]) { // traversing the list
                 if (p.first == key) { // if the key is found
                     p.second = value; // updating the value
@@ -80,10 +80,10 @@ namespace csi281 {
             }  
             // general case:
                 backingStore[index].push_back(make_pair(key, value));
-                count++;
+                total_elements++;
             // if the load factor exceeds MAX_LOAD_FACTOR (0.7)
                 if (getLoadFactor() >= MAX_LOAD_FACTOR) {
-                    resize(capacity * growthFactor);
+                    resize(array_slots * growthFactor);
                 }
         }
         
@@ -97,7 +97,7 @@ namespace csi281 {
         // location in the backing store, so you're modifying
         // the original and not a copy
         optional<V> get(const K &key) {
-            size_t index = hashKey(key) % capacity;
+            size_t index = hashKey(key) % array_slots;
             for (auto &p : backingStore[index]) {
                 if (p.first == key) { // if the key is found:
                     // if key is found:
@@ -115,11 +115,11 @@ namespace csi281 {
         // location in the backing store, so you're modifying
         // the original and not a copy
         void remove(const K &key) {
-            size_t index = hashKey(key) % capacity;
+            size_t index = hashKey(key) % array_slots;
             for (auto &p : backingStore[index]) { // traversing the list
                 if (p.first == key) { // if the key is found:
                     backingStore[index].remove(p); // remove the pair
-                    count--; // decrease count
+                    total_elements--; // decrease total_elements
                     return;
                 }
             }
@@ -127,22 +127,22 @@ namespace csi281 {
         
         // Calculate and return the load factor
         float getLoadFactor() {
-            return ((float) count) / ((float) capacity);
+            return ((float) total_elements) / ((float) array_slots);
         }
         
-        // Get the count
-        int getCount() {
-            return count;
+        // Get the total_elements
+        int getTotalElements() {
+            return total_elements;
         }
         
-        // Get the capacity
+        // Get the array_slots
         int getCapacity() {
-            return capacity;
+            return array_slots;
         }
         
         // Print out the contents of the hash table
         void debugPrint() {
-            for (int i = 0; i < capacity; i++) {
+            for (int i = 0; i < array_slots; i++) {
                 cout << i << ":";
                 for (auto p : backingStore[i]) {
                     cout << " -> (" << p.first << ", " << p.second << ")";
@@ -152,9 +152,9 @@ namespace csi281 {
         }
         
     private:
-        int capacity = 0;
+        int array_slots = 0;
         int growthFactor = 2;
-        int count = 0;
+        int total_elements = 0;
         hash<K> key_hash;
         list<pair<K, V> > *backingStore = nullptr;
         
@@ -168,8 +168,8 @@ namespace csi281 {
             }
 
             // get items from old backing store and move them over
-            if (count > 0) { // only if there are items to move
-                for (int i = 0; i < capacity; i++) {
+            if (total_elements > 0) { // only if there are items to move
+                for (int i = 0; i < array_slots; i++) {
                     for (auto p : backingStore[i]) {
                         // find location in new array
                         size_t index = hashKey(p.first) % cap;
@@ -184,11 +184,11 @@ namespace csi281 {
             }
 
             backingStore = backingStoreReplacement;
-            capacity = cap;
+            array_slots = cap;
         }
         
         // hash anything into an integer appropriate for
-        // the current capacity
+        // the current array_slots
         // TIP: use the std::hash key_hash defined as a private variable
         size_t hashKey(const K &key) {
             return key_hash(key);
