@@ -71,15 +71,16 @@ namespace csi281 {
                 return;
             }
             // general case:
-            backingStore[findArraySlot(key)].push_back(make_pair(key, value));
-            total_elements++;
-            // if the load factor exceeds MAX_LOAD_FACTOR (0.7)
-                if (atMAX_LOAD_FACTOR()) {
-                    resize(array_slots * growthFactor);
-                }
+            insertNewKey(key, value);
+
+            if (atMAX_LOAD_FACTOR())
+                resize(array_slots * growthFactor);
         }
 
-        bool atMAX_LOAD_FACTOR() { return getLoadFactor() >= MAX_LOAD_FACTOR; }
+        void insertNewKey(const K key, const V value) {
+            backingStore[findArraySlot(key)].push_back(make_pair(key, value));
+            total_elements++;
+        }
 
         size_t findArraySlot(const K key) { return (hashKey(key) % array_slots); }
 
@@ -146,6 +147,8 @@ namespace csi281 {
         
         // Get the array_slots
         int getCapacity() { return array_slots; }
+
+        bool atMAX_LOAD_FACTOR() { return getLoadFactor() >= MAX_LOAD_FACTOR; }
 
         bool isInvalidCapacity(int capacity) const { return capacity < 1; }
         
