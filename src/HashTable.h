@@ -66,8 +66,10 @@ namespace csi281 {
         // location in the backing store, so you're modifying
         // the original and not a copy
         void put(const K key, const V value) {
-            if(keyExists(key, value))
+            if(keyExists(key)) {
+                updateValue(key, value);
                 return;
+            }
             // general case:
             backingStore[findArraySlot(key)].push_back(make_pair(key, value));
             total_elements++;
@@ -79,14 +81,21 @@ namespace csi281 {
 
         size_t findArraySlot(const K key) { return (hashKey(key) % array_slots); }
 
-        bool keyExists(const K key, const V value) {
+        bool keyExists(const K key) {
             for (auto &p : backingStore[findArraySlot(key)]) { // traversing the list
                 if (p.first == key) { // if the key is found
-                    p.second = value; // updating the value
                     return true;
                 }
             }
             return false;
+        }
+
+        void updateValue(const K key, const V value) {
+            for (auto &p : backingStore[findArraySlot(key)]) { // traversing the list
+                if (p.first == key) { // if the key is found
+                    p.second = value; // updating the value
+                }
+            }
         }
 
         // Get the item associated with a particular key
