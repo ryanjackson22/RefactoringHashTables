@@ -4,9 +4,8 @@
 //  This file defines a Hash Table class.
 //  You SHOULD modify this file.
 //
-//  Copyright  2019 David Kopec
-//  Edited     2023 Ryan Jackson
-//  Refactored 2024 Ryan Jackson
+//  Copyright 2019 David Kopec
+//  Edited    2023 Ryan Jackson
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation files
@@ -48,12 +47,11 @@ namespace csi281 {
     class HashTable {
     public:
         // Initialize the array with a starting capacity
-        HashTable(int capacity = DEFAULT_CAPACITY) {
-            resize(capacity);
+        HashTable(int cap = DEFAULT_CAPACITY) {
+            if (cap < 1) { cap = 1; } // cannot have < 1 capacity
+            resize(cap);
         }
-
-        bool isInvalidCapacity(int capacity) const { return capacity < 1; }
-
+        
         // Erase the array
         ~HashTable() {
             delete[] backingStore;
@@ -154,15 +152,15 @@ namespace csi281 {
         int growthFactor = 2;
         int count = 0;
         hash<K> key_hash;
-        list<pair<K, V> > *backingStore = nullptr;
+        list<pair<K, V>> *backingStore = nullptr;
         
         // Shift all of the items in backingStore into a
         // new backing store of size cap, or create
         // the backingStore for the first time
         void resize(int cap) {
-            list<pair<K, V> > *backingStoreReplacement = new list<pair<K, V> >[cap];
+            list<pair<K, V>> *backingStoreReplacement = new list<pair<K, V>>[cap];
             for (int i = 0; i < cap; i++) {
-                backingStoreReplacement[i] = list<pair<K, V> >();
+                backingStoreReplacement[i] = list<pair<K, V>>();
             }
 
             // get items from old backing store and move them over
