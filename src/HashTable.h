@@ -170,12 +170,9 @@ namespace csi281 {
                     }
                 }
             }
-
-            if (backingStore != nullptr) {
-                delete[] backingStore;
-            }
-
+            delete[] backingStore;
             backingStore = newBackingStore;
+
             array_slots = capacity;
         }
 
