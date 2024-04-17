@@ -117,7 +117,7 @@ namespace csi281 {
         // location in the backing store, so you're modifying
         // the original and not a copy
         void remove(const K &key) {
-//            size_t index = hashKey(key) % array_slots;
+//            size_t index = getHashKey(key) % array_slots;
             for (pair<K, V>& element : backingStore[findArraySlot(key, array_slots)]) { // traversing the list
                 if (element.first == key) { // if the key is found:
                     backingStore[findArraySlot(key, array_slots)].remove(element); // remove the pair
@@ -137,7 +137,7 @@ namespace csi281 {
 
         bool isInvalidCapacity(int capacity) const { return capacity < 1; }
 
-        size_t findArraySlot(const K key, const size_t capacity) { return (hashKey(key) % capacity); }
+        size_t findArraySlot(const K key, const size_t capacity) { return (getHashKey(key) % capacity); }
 
         // Print out the contents of the hash table
         void debugPrint() {
@@ -187,7 +187,7 @@ namespace csi281 {
         // hash anything into an integer appropriate for
         // the current array_slots
         // TIP: use the std::hash key_hash defined as a private variable
-        size_t hashKey(const K &key) {
+        size_t getHashKey(const K &key) {
             return key_hash(key);
         }
     };
