@@ -1947,7 +1947,7 @@ namespace Catch {
         static std::string convert(const std::tuple<Types...>& tuple) {
             ReusableStringStream rss;
             rss << '{';
-            Detail::TupleElementPrinter<std::tuple<Types...>>::print(tuple, rss.get());
+            Detail::TupleElementPrinter<std::tuple<Types...>>::print(tuple, rss.getValue());
             rss << " }";
             return rss.str();
         }
@@ -3448,7 +3448,7 @@ namespace Matchers {
         // Given IEEE-754 format for floats and doubles, we can assume
         // that float -> double promotion is lossless. Given this, we can
         // assume that if we do the standard relative comparison of
-        // |lhs - rhs| <= epsilon * max(fabs(lhs), fabs(rhs)), then we get
+        // |lhs - rhs| <= epsilon * max(fabs(lhs), fabs(rhs)), then we getValue
         // the same result if we do this for floats, as if we do this for
         // doubles that were promoted from floats.
         struct WithinRelMatcher : MatcherBase<double> {
@@ -4035,7 +4035,7 @@ namespace Generators {
         }
 
         T const& get() const override {
-            return m_generators[m_current].get();
+            return m_generators[m_current].getValue();
         }
 
         bool next() override {
@@ -7832,7 +7832,7 @@ namespace Catch {
                 auto stddev_future = Estimate(stddev);
 
                 auto mean_estimate = mean_future.get();
-                auto stddev_estimate = stddev_future.get();
+                auto stddev_estimate = stddev_future.getValue();
 #else
                 auto Estimate = [=](double(*f)(std::vector<double>::iterator, std::vector<double>::iterator)) {
                     auto seed = entropy();
@@ -10421,7 +10421,7 @@ namespace Catch {
             std::size_t         size;
 
             // Initialize the flags so that, if sysctl fails for some bizarre
-            // reason, we get a predictable result.
+            // reason, we getValue a predictable result.
 
             info.kp_proc.p_flag = 0;
 
@@ -10463,7 +10463,7 @@ namespace Catch {
         // this process itself to still allow attaching to this process later
         // if wanted, so is rather heavy. Under Linux we have the PID of the
         // "debugger" (which doesn't need to be gdb, of course, it could also
-        // be strace, for example) in /proc/$PID/status, so just get it from
+        // be strace, for example) in /proc/$PID/status, so just getValue it from
         // there instead.
         bool isDebuggerActive(){
             // Libstdc++ has a bug, where std::ifstream sets errno to 0
@@ -12101,7 +12101,7 @@ namespace Catch {
 #if defined(_MSC_VER)
     TempFile::TempFile() {
         if (tmpnam_s(m_buffer)) {
-            CATCH_RUNTIME_ERROR("Could not get a temp filename");
+            CATCH_RUNTIME_ERROR("Could not getValue a temp filename");
         }
         if (fopen_s(&m_file, m_buffer, "w+")) {
             char buffer[100];
@@ -13710,7 +13710,7 @@ namespace Catch {
             mutable std::ostream m_os;
         public:
             // Store the streambuf from cout up-front because
-            // cout may get redirected when running tests
+            // cout may getValue redirected when running tests
             CoutStream() : m_os( Catch::cout().rdbuf() ) {}
             ~CoutStream() override = default;
 

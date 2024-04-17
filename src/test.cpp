@@ -48,19 +48,19 @@ TEST_CASE( "Hash Table w/ string int", "[stringint]" ) {
         // basic checks
         HashTable<string, int> ht1 = HashTable<string, int>();
         ht1.put("dog", 34);
-        auto optValue = ht1.get("dog");
+        auto optValue = ht1.getValue("dog");
         CHECK( optValue.has_value() );
         CHECK( optValue.value() == 34 );
         CHECK(ht1.getTotalElements() == 1 );
         // change value
         ht1.put("dog", 50);
-        optValue = ht1.get("dog");
+        optValue = ht1.getValue("dog");
         CHECK( optValue.has_value() );
         CHECK( optValue.value() == 50 );
         CHECK(ht1.getTotalElements() == 1 );
         // remove value
         ht1.remove("dog");
-        optValue = ht1.get("dog");
+        optValue = ht1.getValue("dog");
         CHECK(ht1.getTotalElements() == 0 );
         CHECK( !optValue.has_value() );
     }
@@ -73,13 +73,13 @@ TEST_CASE( "Hash Table w/ string int", "[stringint]" ) {
         cout << "Before Resize" << endl;
         ht2.debugPrint();
         CHECK(ht2.getArraySlots() == 5 );
-        auto optValue = ht2.get("panda");
+        auto optValue = ht2.getValue("panda");
         CHECK( optValue.has_value() );
         CHECK( optValue.value() == 134 );
         CHECK(ht2.getTotalElements() == 3 );
         // change cat value
         ht2.put("cat", 334);
-        optValue = ht2.get("cat");
+        optValue = ht2.getValue("cat");
         CHECK( optValue.has_value() );
         CHECK( optValue.value() == 334 );
         CHECK(ht2.getTotalElements() == 3 );
@@ -91,16 +91,16 @@ TEST_CASE( "Hash Table w/ string int", "[stringint]" ) {
         CHECK(ht2.getArraySlots() == 10 );
         CHECK(ht2.getTotalElements() == 4 );
         // check all values still work
-        optValue = ht2.get("cat");
+        optValue = ht2.getValue("cat");
         CHECK( optValue.has_value() );
         CHECK( optValue.value() == 334 );
-        optValue = ht2.get("dog");
+        optValue = ht2.getValue("dog");
         CHECK( optValue.has_value() );
         CHECK( optValue.value() == 34 );
-        optValue = ht2.get("panda");
+        optValue = ht2.getValue("panda");
         CHECK( optValue.has_value() );
         CHECK( optValue.value() == 134 );
-        optValue = ht2.get("bull");
+        optValue = ht2.getValue("bull");
         CHECK( optValue.has_value() );
         CHECK( optValue.value() == 500 );
     }
@@ -113,24 +113,24 @@ TEST_CASE( "Hash Table w/ string string", "[stringstring]" ) {
             string s = string(i, 'a');
             ht1.put(s, s);
         }
-        auto optValue = ht1.get("aaaaaaaaaaa");
+        auto optValue = ht1.getValue("aaaaaaaaaaa");
         CHECK( optValue.has_value() );
         CHECK( optValue.value() == "aaaaaaaaaaa" );
         CHECK(ht1.getTotalElements() == 50 );
         CHECK(ht1.getArraySlots() == 80 );
         // change value
         ht1.put("aaa", "dog");
-        optValue = ht1.get("aaa");
+        optValue = ht1.getValue("aaa");
         CHECK( optValue.has_value() );
         CHECK( optValue.value() == "dog" );
         CHECK(ht1.getTotalElements() == 50 );
         // remove value
         ht1.remove("a");
-        optValue = ht1.get("a");
+        optValue = ht1.getValue("a");
         CHECK(ht1.getTotalElements() == 49 );
         CHECK( !optValue.has_value() );
         ht1.remove("aaaa");
-        optValue = ht1.get("aaaa");
+        optValue = ht1.getValue("aaaa");
         CHECK(ht1.getTotalElements() == 48 );
         CHECK( !optValue.has_value() );
         CHECK(ht1.getArraySlots() == 80 );
@@ -144,23 +144,23 @@ TEST_CASE( "Hash Table w/ int float", "[intfloat]" ) {
             float f = (((float) i) * ((float) i) / 3.0);
             ht1.put(i, f);
         }
-        auto optValue = ht1.get(27);
+        auto optValue = ht1.getValue(27);
         CHECK( optValue.has_value() );
         CHECK(ht1.getTotalElements() == 50 );
         CHECK(ht1.getArraySlots() == 80 );
         // change value
         ht1.put(45, 2.5);
-        optValue = ht1.get(45);
+        optValue = ht1.getValue(45);
         CHECK( optValue.has_value() );
         CHECK( optValue.value() == 2.5 );
         CHECK(ht1.getTotalElements() == 50 );
         // remove value
         ht1.remove(48);
-        optValue = ht1.get(48);
+        optValue = ht1.getValue(48);
         CHECK(ht1.getTotalElements() == 49 );
         CHECK( !optValue.has_value() );
         ht1.remove(2);
-        optValue = ht1.get(2);
+        optValue = ht1.getValue(2);
         CHECK(ht1.getTotalElements() == 48 );
         CHECK( !optValue.has_value() );
         CHECK(ht1.getArraySlots() == 80 );

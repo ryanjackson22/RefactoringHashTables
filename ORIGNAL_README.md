@@ -12,7 +12,7 @@ You can effectively use a lot of standard library constructs in this assignment 
 4. Test it on your local computer by following the build directions below
 5. Run `nmake clean` or `make clean` to remove any binary files
 6. Push your code to GitHub (Don't push your binary files—the purpose of the prior step is to remove them). Every push will be automatically tested on both Windows (nmake/MSVC) and Linux (GNUMake/GCC) through a GitHub Action. You will know your code is correct when you see a green check mark next to the commit.
-7. Submit the URL to your private repository on Canvas. Submit even if you are not passing all tests so you can get partial credit.
+7. Submit the URL to your private repository on Canvas. Submit even if you are not passing all tests so you can getValue partial credit.
 
 ## Standard Library Restrictions
 

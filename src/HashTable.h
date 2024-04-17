@@ -100,10 +100,10 @@ namespace csi281 {
         // if key is found
         // TIP: read the documentation on optional
         // https://en.cppreference.com/w/cpp/utility/optional
-        // TIP: Be careful to get a reference to the list at each
+        // TIP: Be careful to getValue a reference to the list at each
         // location in the backing store, so you're modifying
         // the original and not a copy
-        optional<V> get(const K &key) {
+        optional<V> getValue(const K &key) {
             for (pair<K, V>& element : backingStore[findArraySlot(key, array_slots)]) {
                 if (element.key_ == key) {
                     return element.value_;
@@ -116,12 +116,12 @@ namespace csi281 {
         // Remove a key and any associated value from the hash table
         // TIP: I suggest using remove_if()
         // https://en.cppreference.com/w/cpp/algorithm/remove
-        // TIP: Be careful to get a reference to the list at each
+        // TIP: Be careful to getValue a reference to the list at each
         // location in the backing store, so you're modifying
         // the original and not a copy
         void remove(const K &key) {
             for (pair<K, V>& element : backingStore[findArraySlot(key, array_slots)]) {
-                if (element.key_== key) { // if the key is found:
+                if (element.key_ == key) { // if the key is found:
                     backingStore[findArraySlot(key, array_slots)].remove(element);
                     total_elements--;
                     return;
