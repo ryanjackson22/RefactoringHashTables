@@ -160,10 +160,7 @@ namespace csi281 {
         // new backing store of size capacity, or create
         // the backingStore for the first time
         void resizeHashTable(int capacity) {
-            list<pair<K, V> > *newBackingStore = new list<pair<K, V> >[capacity];
-            for (int currentIndex = 0; currentIndex < capacity; currentIndex++) {
-                newBackingStore[currentIndex] = list<pair<K, V> >();
-            }
+            list<pair<K, V> > *newBackingStore = createNewBackingStore(capacity);
 
             // get items from old backing store and move them over
             if (total_elements > 0) { // only if there are items to move
@@ -181,7 +178,15 @@ namespace csi281 {
             backingStore = newBackingStore;
             array_slots = capacity;
         }
-        
+
+        list<pair<K, V> > *createNewBackingStore(int capacity) const {
+            list<pair<K, V> > *newBackingStore = new list<pair<K, V> >[capacity];
+            for (int currentIndex = 0; currentIndex < capacity; currentIndex++) {
+                newBackingStore[currentIndex] = list<pair<K, V> >();
+            }
+            return newBackingStore;
+        }
+
         // hash anything into an integer appropriate for
         // the current array_slots
         // TIP: use the std::hash key_hash defined as a private variable
