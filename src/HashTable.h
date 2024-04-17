@@ -133,6 +133,8 @@ namespace csi281 {
         
         int getArraySlots() { return array_slots; }
 
+        void setArraySlots(size_t newSize) { array_slots = newSize; }
+
         bool atMAX_LOAD_FACTOR() { return getLoadFactor() >= MAX_LOAD_FACTOR; }
 
         bool isInvalidCapacity(int capacity) const { return capacity < 1; }
@@ -162,13 +164,14 @@ namespace csi281 {
         void resizeHashTable(int capacity) {
             list<pair<K, V> > *newBackingStore = createNewBackingStore(capacity);
 
-            // get items from old backing store and move them over
-            if (elementsToMove()) // only if there are items to move
+            if (elementsToMove())
                 moveOver(capacity, newBackingStore);
 
             delete[] backingStore;
             backingStore = newBackingStore;
-            array_slots = capacity;
+
+            setArraySlots(capacity);
+//            array_slots = capacity;
         }
 
         bool elementsToMove() const { return total_elements > 0; }
