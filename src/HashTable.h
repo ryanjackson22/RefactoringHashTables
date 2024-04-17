@@ -139,6 +139,8 @@ namespace csi281 {
 
         bool isInvalidCapacity(int capacity) const { return capacity < 1; }
 
+        bool elementsToMove() const { return total_elements > 0; }
+
         size_t findArraySlot(const K key, const size_t capacity) { return (getHashKey(key) % capacity); }
 
         // Print out the contents of the hash table
@@ -158,9 +160,6 @@ namespace csi281 {
         hash<K> key_hash;
         list<pair<K, V> > *backingStore = nullptr;
         
-        // Shift all of the items in backingStore into a
-        // new backing store of size capacity, or create
-        // the backingStore for the first time
         void resizeHashTable(int capacity) {
             list<pair<K, V> > *newBackingStore = createNewBackingStore(capacity);
 
@@ -171,14 +170,11 @@ namespace csi281 {
             backingStore = newBackingStore;
 
             setArraySlots(capacity);
-//            array_slots = capacity;
         }
 
-        bool elementsToMove() const { return total_elements > 0; }
-
         void moveOver(int capacity, list<pair<K, V> > *newBackingStore) {
-            for (int i = 0; i < array_slots; i++) {
-                for (pair<K, V> element : backingStore[i]) {
+            for (int currentIndex = 0; currentIndex < array_slots; currentIndex++) {
+                for (pair<K, V> element : backingStore[currentIndex]) {
                     newBackingStore[findArraySlot(element.first, capacity)].push_back(element);
                 }
             }
