@@ -42,7 +42,7 @@
 #define GROWTH_FACTOR 2
 
 //#define key first
-//#define value second
+#define value_ second
 
 using namespace std;
 
@@ -89,7 +89,7 @@ namespace csi281 {
         void updateValue(const K key, const V value) {
             for (pair<K, V>& element : backingStore[findArraySlot(key, array_slots)]) { // traversing the list
                 if (element.first == key) { // if the key is found
-                    element.second = value; // updating the value
+                    element.value_ = value; // updating the value
                 }
             }
         }
@@ -106,7 +106,7 @@ namespace csi281 {
         optional<V> get(const K &key) {
             for (pair<K, V>& element : backingStore[findArraySlot(key, array_slots)]) {
                 if (element.first == key) {
-                    return element.second;
+                    return element.value_;
                 }
             }
             // return an empty optional if the item is not found
@@ -151,7 +151,7 @@ namespace csi281 {
             for (int i = 0; i < array_slots; i++) {
                 cout << i << ":";
                 for (pair<K, V>& element : backingStore[i]) {
-                    cout << " -> (" << element.first << ", " << element.second << ")";
+                    cout << " -> (" << element.first << ", " << element.value_ << ")";
                 }
                 cout << endl;
             }
@@ -198,7 +198,6 @@ namespace csi281 {
             return key_hash(key);
         }
     };
-    
 }
 
 #endif /* hashtable_hpp */
