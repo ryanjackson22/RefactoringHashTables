@@ -40,6 +40,7 @@
 #define DEFAULT_CAPACITY 10
 #define MAX_LOAD_FACTOR 0.7
 #define GROWTH_FACTOR 2
+#define key first
 
 using namespace std;
 
@@ -76,7 +77,7 @@ namespace csi281 {
 
         bool keyExists(const K key) {
             for (pair<K, V>& element : backingStore[findArraySlot(key, array_slots)]) {
-                if (element.first == key) {
+                if (element.key == key) {
                     return true;
                 }
             }
@@ -85,7 +86,7 @@ namespace csi281 {
 
         void updateValue(const K key, const V value) {
             for (pair<K, V>& element : backingStore[findArraySlot(key, array_slots)]) { // traversing the list
-                if (element.first == key) { // if the key is found
+                if (element.key == key) { // if the key is found
                     element.second = value; // updating the value
                 }
             }
@@ -102,7 +103,7 @@ namespace csi281 {
         // the original and not a copy
         optional<V> get(const K &key) {
             for (pair<K, V>& element : backingStore[findArraySlot(key, array_slots)]) {
-                if (element.first == key) {
+                if (element.key == key) {
                     return element.second;
                 }
             }
@@ -119,7 +120,7 @@ namespace csi281 {
         void remove(const K &key) {
 //            size_t index = getHashKey(key) % array_slots;
             for (pair<K, V>& element : backingStore[findArraySlot(key, array_slots)]) { // traversing the list
-                if (element.first == key) { // if the key is found:
+                if (element.key == key) { // if the key is found:
                     backingStore[findArraySlot(key, array_slots)].remove(element); // remove the pair
                     total_elements--; // decrease total_elements
                     return;
@@ -148,7 +149,7 @@ namespace csi281 {
             for (int i = 0; i < array_slots; i++) {
                 cout << i << ":";
                 for (pair<K, V>& element : backingStore[i]) {
-                    cout << " -> (" << element.first << ", " << element.second << ")";
+                    cout << " -> (" << element.key << ", " << element.second << ")";
                 }
                 cout << endl;
             }
@@ -175,7 +176,7 @@ namespace csi281 {
         void moveOver(int capacity, list<pair<K, V> > *newBackingStore) {
             for (int currentIndex = 0; currentIndex < array_slots; currentIndex++) {
                 for (pair<K, V> element : backingStore[currentIndex]) {
-                    newBackingStore[findArraySlot(element.first, capacity)].push_back(element);
+                    newBackingStore[findArraySlot(element.key, capacity)].push_back(element);
                 }
             }
         }
