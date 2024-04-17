@@ -163,13 +163,15 @@ namespace csi281 {
             list<pair<K, V> > *newBackingStore = createNewBackingStore(capacity);
 
             // get items from old backing store and move them over
-            if (total_elements > 0) { // only if there are items to move
+            if (elementsToMove()) // only if there are items to move
                 moveOver(capacity, newBackingStore);
-            }
+
             delete[] backingStore;
             backingStore = newBackingStore;
             array_slots = capacity;
         }
+
+        bool elementsToMove() const { return total_elements > 0; }
 
         void moveOver(int capacity, list<pair<K, V> > *newBackingStore) {
             for (int i = 0; i < array_slots; i++) {
