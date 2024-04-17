@@ -120,11 +120,10 @@ namespace csi281 {
         // location in the backing store, so you're modifying
         // the original and not a copy
         void remove(const K &key) {
-//            size_t index = getHashKey(key) % array_slots;
-            for (pair<K, V>& element : backingStore[findArraySlot(key, array_slots)]) { // traversing the list
+            for (pair<K, V>& element : backingStore[findArraySlot(key, array_slots)]) {
                 if (element.key_== key) { // if the key is found:
-                    backingStore[findArraySlot(key, array_slots)].remove(element); // remove the pair
-                    total_elements--; // decrease total_elements
+                    backingStore[findArraySlot(key, array_slots)].remove(element);
+                    total_elements--;
                     return;
                 }
             }
