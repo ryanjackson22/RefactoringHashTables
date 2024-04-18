@@ -79,9 +79,9 @@ namespace csi281 {
         }
 
         bool keyExists(const K key) {
-            if (locate(key) == nullptr) {
+            if (locate(key) == nullptr)
                 return false;
-            }
+
             return true;
         }
 
@@ -126,7 +126,6 @@ namespace csi281 {
 
         size_t findArraySlot(const K key, const size_t capacity) { return (getHashKey(key) % capacity); }
 
-        // Print out the contents of the hash table
         void printHashTable() {
             for (int i = 0; i < array_slots; i++) {
                 cout << i << ":";
