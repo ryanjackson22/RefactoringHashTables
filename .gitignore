@@ -34,6 +34,7 @@ original_README.md
 *.exe
 *.out
 *.app
+assignment6
 
 # OS generated files
 .DS_Store
