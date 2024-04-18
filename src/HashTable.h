@@ -111,14 +111,6 @@ namespace csi281 {
             if (locate(key) == nullptr)
                 return nullopt;
             return locate(key)->value_;
-
-//            for (pair<K, V>& element : backingStore[findArraySlot(key, array_slots)]) {
-//                if (element.key_ == key) {
-//                    return element.value_;
-//                }
-//            }
-//            // return an empty optional if the item is not found
-//            return nullopt;
         }
         
         // Remove a key and any associated value from the hash table
