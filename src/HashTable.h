@@ -95,8 +95,7 @@ namespace csi281 {
         }
 
         void updateValue(const K key, const V value) {
-            auto element = locate(key);
-            element->value_ = value;
+            locate(key)->value_ = value;
         }
 
         // Get the item associated with a particular key
