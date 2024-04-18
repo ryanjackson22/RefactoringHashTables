@@ -71,7 +71,7 @@ TEST_CASE( "Hash Table w/ string int", "[stringint]" ) {
         ht2.put("cat", 234);
         ht2.put("panda", 134);
         cout << "Before Resize" << endl;
-        ht2.debugPrint();
+        ht2.printHashTable();
         CHECK(ht2.getArraySlots() == 5 );
         auto optValue = ht2.getValue("panda");
         CHECK( optValue.has_value() );
@@ -86,7 +86,7 @@ TEST_CASE( "Hash Table w/ string int", "[stringint]" ) {
         // add one more
         ht2.put("bull", 500);
         cout << "After Resize" << endl;
-        ht2.debugPrint();
+        ht2.printHashTable();
         // expect a resizeHashTable because load factor over 0.7
         CHECK(ht2.getArraySlots() == 10 );
         CHECK(ht2.getTotalElements() == 4 );

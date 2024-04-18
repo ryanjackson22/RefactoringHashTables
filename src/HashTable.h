@@ -127,7 +127,7 @@ namespace csi281 {
         size_t findArraySlot(const K key, const size_t capacity) { return (getHashKey(key) % capacity); }
 
         // Print out the contents of the hash table
-        void debugPrint() {
+        void printHashTable() {
             for (int i = 0; i < array_slots; i++) {
                 cout << i << ":";
                 for (pair<K, V>& element : backingStore[i]) {
