@@ -90,16 +90,13 @@ namespace csi281 {
                     return &element;
                 }
             }
-            // return an empty optional if the item is not found
+            // return nullptr if the item is not found
             return nullptr;
         }
 
         void updateValue(const K key, const V value) {
-            for (pair<K, V>& element : backingStore[findArraySlot(key, array_slots)]) { // traversing the list
-                if (element.key_ == key) { // if the key is found
-                    element.value_ = value; // updating the value
-                }
-            }
+            auto element = locate(key);
+            element->value_ = value;
         }
 
         // Get the item associated with a particular key
