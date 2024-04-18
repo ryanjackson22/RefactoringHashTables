@@ -118,6 +118,8 @@ namespace csi281 {
 
         void setArraySlots(size_t newSize) { array_slots = newSize; }
 
+        void updateBackingStore(list<pair<K, V> > *newBackingStore) { backingStore = newBackingStore; }
+
         bool atMAX_LOAD_FACTOR() { return getLoadFactor() >= MAX_LOAD_FACTOR; }
 
         bool isInvalidCapacity(int capacity) const { return capacity < 1; }
@@ -154,9 +156,7 @@ namespace csi281 {
             setArraySlots(capacity);
         }
 
-        void updateBackingStore(list<pair<K, V> > *newBackingStore) { backingStore = newBackingStore; }
-
-        void moveOver(int capacity, list<pair<K, V> > *newBackingStore) {
+        void moveOver(const int &capacity, list<pair<K, V> > *newBackingStore) {
             for (int currentIndex = 0; currentIndex < array_slots; currentIndex++) {
                 for (pair<K, V> element : backingStore[currentIndex]) {
                     newBackingStore[findArraySlot(element.key_, capacity)].push_back(element);
