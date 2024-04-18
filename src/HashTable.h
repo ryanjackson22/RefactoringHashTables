@@ -54,6 +54,7 @@ namespace csi281 {
         HashTable(int capacity = DEFAULT_CAPACITY) {
             if (isInvalidCapacity(capacity))
                 capacity = DEFAULT_CAPACITY;
+
             resizeHashTable(capacity);
         }
 
@@ -121,7 +122,7 @@ namespace csi281 {
 
         bool isInvalidCapacity(int capacity) const { return capacity < 1; }
 
-        bool elementsToMove() const { return total_elements > 0; }
+        bool isElementsToMove() const { return total_elements > 0; }
 
         size_t findArraySlot(const K key, const size_t capacity) { return (getHashKey(key) % capacity); }
 
@@ -145,7 +146,7 @@ namespace csi281 {
         void resizeHashTable(int capacity) {
             list<pair<K, V> > *newBackingStore = createNewBackingStore(capacity);
 
-            if (elementsToMove())
+            if (isElementsToMove())
                 moveOver(capacity, newBackingStore);
 
             delete[] backingStore;
