@@ -78,12 +78,10 @@ namespace csi281 {
         }
 
         bool keyExists(const K key) {
-            for (pair<K, V>& element : backingStore[findArraySlot(key, array_slots)]) {
-                if (element.key_ == key) {
-                    return true;
-                }
+            if (locate(key) == nullptr) {
+                return false;
             }
-            return false;
+            return true;
         }
 
         pair<K, V> *locate(const K &key) {
