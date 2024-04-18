@@ -120,13 +120,9 @@ namespace csi281 {
         // location in the backing store, so you're modifying
         // the original and not a copy
         void remove(const K &key) {
-            for (pair<K, V>& element : backingStore[findArraySlot(key, array_slots)]) {
-                if (element.key_ == key) { // if the key is found:
-                    backingStore[findArraySlot(key, array_slots)].remove(element);
-                    total_elements--;
-                    return;
-                }
-            }
+            auto element = locate(key);
+            backingStore[findArraySlot(key, array_slots)].remove(*element);
+            total_elements--;
         }
 
         float getLoadFactor() { return ((float) total_elements) / ((float) array_slots); }
