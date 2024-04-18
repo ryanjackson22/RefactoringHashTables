@@ -98,15 +98,6 @@ namespace csi281 {
             locate(key)->value_ = value;
         }
 
-        // Get the item associated with a particular key
-        // return an empty optional (nullopt) if the item is not found
-        // and returns an optional with the value associated with key
-        // if key is found
-        // TIP: read the documentation on optional
-        // https://en.cppreference.com/w/cpp/utility/optional
-        // TIP: Be careful to getValue a reference to the list at each
-        // location in the backing store, so you're modifying
-        // the original and not a copy
         optional<V> getValue(const K &key) {
             if (locate(key) == nullptr)
                 return nullopt;
