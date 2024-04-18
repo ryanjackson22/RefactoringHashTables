@@ -86,6 +86,16 @@ namespace csi281 {
             return false;
         }
 
+        pair<K, V> *locate(const K &key) {
+            for (pair<K, V>& element : backingStore[findArraySlot(key, array_slots)]) {
+                if (element.key_ == key) {
+                    return &element;
+                }
+            }
+            // return an empty optional if the item is not found
+            return nullptr;
+        }
+
         void updateValue(const K key, const V value) {
             for (pair<K, V>& element : backingStore[findArraySlot(key, array_slots)]) { // traversing the list
                 if (element.key_ == key) { // if the key is found
