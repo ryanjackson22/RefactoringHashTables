@@ -149,10 +149,12 @@ namespace csi281 {
                 moveOver(capacity, newBackingStore);
 
             delete[] backingStore;
-            backingStore = newBackingStore;
+            updateBackingStore(newBackingStore);
 
             setArraySlots(capacity);
         }
+
+        void updateBackingStore(list<pair<K, V> > *newBackingStore) { backingStore = newBackingStore; }
 
         void moveOver(int capacity, list<pair<K, V> > *newBackingStore) {
             for (int currentIndex = 0; currentIndex < array_slots; currentIndex++) {
