@@ -113,12 +113,6 @@ namespace csi281 {
             return locate(key)->value_;
         }
         
-        // Remove a key and any associated value from the hash table
-        // TIP: I suggest using remove_if()
-        // https://en.cppreference.com/w/cpp/algorithm/remove
-        // TIP: Be careful to getValue a reference to the list at each
-        // location in the backing store, so you're modifying
-        // the original and not a copy
         void remove(const K &key) {
             backingStore[findArraySlot(key, array_slots)].remove(*locate(key));
             total_elements--;
