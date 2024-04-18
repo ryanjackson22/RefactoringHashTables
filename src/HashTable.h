@@ -68,7 +68,6 @@ namespace csi281 {
                 return;
             }
             insertNewKey(key, value);
-            total_elements++;
 
             if (atMAX_LOAD_FACTOR())
                 resizeHashTable(array_slots * GROWTH_FACTOR);
@@ -76,6 +75,7 @@ namespace csi281 {
 
         void insertNewKey(const K key, const V value) {
             backingStore[findArraySlot(key, array_slots)].push_back(make_pair(key, value));
+            total_elements++;
         }
 
         bool keyExists(const K key) {
