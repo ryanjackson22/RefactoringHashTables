@@ -120,8 +120,7 @@ namespace csi281 {
         // location in the backing store, so you're modifying
         // the original and not a copy
         void remove(const K &key) {
-            auto element = locate(key);
-            backingStore[findArraySlot(key, array_slots)].remove(*element);
+            backingStore[findArraySlot(key, array_slots)].remove(*locate(key));
             total_elements--;
         }
 
