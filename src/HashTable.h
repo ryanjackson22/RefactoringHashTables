@@ -151,13 +151,13 @@ namespace csi281 {
             list<pair<K, V> > *newBackingStore = createNewBackingStore(new_array_slots);
 
             if (isElementsToMove())
-                moveOver(new_array_slots, newBackingStore);
+                moveElementsOver(new_array_slots, newBackingStore);
 
             updateBackingStore(newBackingStore);
             setArraySlots(new_array_slots);
         }
 
-        void moveOver(const int &capacity, list<pair<K, V> > *newBackingStore) {
+        void moveElementsOver(const int &capacity, list<pair<K, V> > *newBackingStore) {
             for (int currentIndex = 0; currentIndex < array_slots; currentIndex++) {
                 for (pair<K, V> element : backingStore[currentIndex]) {
                     newBackingStore[findArraySlot(element.key_, capacity)].push_back(element);
