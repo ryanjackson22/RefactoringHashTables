@@ -100,7 +100,7 @@ namespace csi281 {
         }
 
         optional<V> getValue(const K &key) {
-            if (locate(key) == nullptr)
+            if (!keyExists(key))
                 return nullopt;
             return locate(key)->value_;
         }
