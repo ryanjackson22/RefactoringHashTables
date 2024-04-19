@@ -10,8 +10,8 @@ You can effectively use a lot of standard library constructs in this assignment 
 2. Add me (@davecom) as a collaborator on your **private** repository.
 3. Implement the missing parts where it says "YOUR CODE HERE"
 4. Test it on your local computer by following the build directions below
-5. Run `nmake clean` or `make clean` to remove any binary files
-6. Push your code to GitHub (Don't push your binary files—the purpose of the prior step is to remove them). Every push will be automatically tested on both Windows (nmake/MSVC) and Linux (GNUMake/GCC) through a GitHub Action. You will know your code is correct when you see a green check mark next to the commit.
+5. Run `nmake clean` or `make clean` to removeElement any binary files
+6. Push your code to GitHub (Don't push your binary files—the purpose of the prior step is to removeElement them). Every push will be automatically tested on both Windows (nmake/MSVC) and Linux (GNUMake/GCC) through a GitHub Action. You will know your code is correct when you see a green check mark next to the commit.
 7. Submit the URL to your private repository on Canvas. Submit even if you are not passing all tests so you can getValue partial credit.
 
 ## Standard Library Restrictions
@@ -44,11 +44,11 @@ Please do not use the hash table or dictionary like data structures included in 
 
 ### macOS and GNU/Linux
 
-CD to the appropriate directory and run `make` and `./assignment6` to run all of the tests. Run `make clean` to remove all objects files, and the executable.
+CD to the appropriate directory and run `make` and `./assignment6` to run all of the tests. Run `make clean` to removeElement all objects files, and the executable.
 
 ### Windows
 
-From the start menu (assuming you have installed Visual Studio 2019) open the "Developer Command Prompt." CD to the appropriate directory and run `nmake` and `assignment6` to run all of the tests. Run `nmake clean` to remove all objects files, and the executable.
+From the start menu (assuming you have installed Visual Studio 2019) open the "Developer Command Prompt." CD to the appropriate directory and run `nmake` and `assignment6` to run all of the tests. Run `nmake clean` to removeElement all objects files, and the executable.
 
 ## Checklist for Submission
 

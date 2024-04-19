@@ -58,8 +58,8 @@ TEST_CASE( "Hash Table w/ string int", "[stringint]" ) {
         CHECK( optValue.has_value() );
         CHECK( optValue.value() == 50 );
         CHECK(ht1.getTotalElements() == 1 );
-        // remove value
-        ht1.remove("dog");
+        // removeElement value
+        ht1.removeElement("dog");
         optValue = ht1.getValue("dog");
         CHECK(ht1.getTotalElements() == 0 );
         CHECK( !optValue.has_value() );
@@ -124,12 +124,12 @@ TEST_CASE( "Hash Table w/ string string", "[stringstring]" ) {
         CHECK( optValue.has_value() );
         CHECK( optValue.value() == "dog" );
         CHECK(ht1.getTotalElements() == 50 );
-        // remove value
-        ht1.remove("a");
+        // removeElement value
+        ht1.removeElement("a");
         optValue = ht1.getValue("a");
         CHECK(ht1.getTotalElements() == 49 );
         CHECK( !optValue.has_value() );
-        ht1.remove("aaaa");
+        ht1.removeElement("aaaa");
         optValue = ht1.getValue("aaaa");
         CHECK(ht1.getTotalElements() == 48 );
         CHECK( !optValue.has_value() );
@@ -154,12 +154,12 @@ TEST_CASE( "Hash Table w/ int float", "[intfloat]" ) {
         CHECK( optValue.has_value() );
         CHECK( optValue.value() == 2.5 );
         CHECK(ht1.getTotalElements() == 50 );
-        // remove value
-        ht1.remove(48);
+        // removeElement value
+        ht1.removeElement(48);
         optValue = ht1.getValue(48);
         CHECK(ht1.getTotalElements() == 49 );
         CHECK( !optValue.has_value() );
-        ht1.remove(2);
+        ht1.removeElement(2);
         optValue = ht1.getValue(2);
         CHECK(ht1.getTotalElements() == 48 );
         CHECK( !optValue.has_value() );

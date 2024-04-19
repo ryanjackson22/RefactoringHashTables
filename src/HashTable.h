@@ -105,7 +105,7 @@ namespace csi281 {
             return locate(key)->value_;
         }
         
-        void remove(const K &key) {
+        void removeElement(const K &key) {
             backingStore[findArraySlot(key, array_slots)].remove(*locate(key));
             total_elements--;
         }
