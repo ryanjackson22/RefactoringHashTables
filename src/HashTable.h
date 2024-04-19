@@ -165,7 +165,7 @@ namespace csi281 {
             }
         }
 
-        list<pair<K, V> > *createNewBackingStore(int new_array_slots) const {
+        list<pair<K, V> > *createNewBackingStore(const int &new_array_slots) const {
             list<pair<K, V> > *newBackingStore = new list<pair<K, V> >[new_array_slots];
             for (int currentIndex = 0; currentIndex < new_array_slots; currentIndex++) {
                 newBackingStore[currentIndex] = list<pair<K, V> >();
