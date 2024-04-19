@@ -147,14 +147,14 @@ namespace csi281 {
         hash<K> key_hash;
         list<pair<K, V> > *backingStore = nullptr;
         
-        void resizeHashTable(int capacity) {
-            list<pair<K, V> > *newBackingStore = createNewBackingStore(capacity);
+        void resizeHashTable(int new_array_slots) {
+            list<pair<K, V> > *newBackingStore = createNewBackingStore(new_array_slots);
 
             if (isElementsToMove())
-                moveOver(capacity, newBackingStore);
+                moveOver(new_array_slots, newBackingStore);
 
             updateBackingStore(newBackingStore);
-            setArraySlots(capacity);
+            setArraySlots(new_array_slots);
         }
 
         void moveOver(const int &capacity, list<pair<K, V> > *newBackingStore) {
