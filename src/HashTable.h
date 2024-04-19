@@ -118,7 +118,10 @@ namespace csi281 {
 
         void setArraySlots(size_t newSize) { array_slots = newSize; }
 
-        void updateBackingStore(list<pair<K, V> > *newBackingStore) { backingStore = newBackingStore; }
+        void updateBackingStore(list<pair<K, V> > *newBackingStore) {
+            delete[] backingStore;
+            backingStore = newBackingStore;
+        }
 
         bool atMAX_LOAD_FACTOR() { return getLoadFactor() >= MAX_LOAD_FACTOR; }
 
@@ -150,7 +153,6 @@ namespace csi281 {
             if (isElementsToMove())
                 moveOver(capacity, newBackingStore);
 
-            delete[] backingStore;
             updateBackingStore(newBackingStore);
 
             setArraySlots(capacity);
