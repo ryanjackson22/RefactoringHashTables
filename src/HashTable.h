@@ -154,7 +154,6 @@ namespace csi281 {
                 moveOver(capacity, newBackingStore);
 
             updateBackingStore(newBackingStore);
-
             setArraySlots(capacity);
         }
 
